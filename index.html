@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/style.css">
+  <title>Rakaia Lions Bulb Fundraiser</title>
+</head>
+
+<body>
+
+  <!-- STEP 0: Home Page -->
+  <img src="images/hero-image.png" alt="Yellow Strike Lily" class="hero-img">
+
+  <div id="form-step-0">
+    <h1>Rakaia Lions Bulbs</h1>
+    <h3>Support your community - buy bulbs today!</h3>
+    <button class="primary-btn" id="startOrderBtn">Order Now</button>
+
+    <p>The Rakaia Lions Charitable Trust is proud to offer a fundraiser featuring Lily and Freesia bulbs, generously
+      donated by local bulb growers. These growers supply bulbs to commercial flower producers around the world and have
+      chosen to support our cause.</p>
+
+    <p>We’re offering these bulbs at wholesale prices to raise funds for community initiatives. There are 12 varieties
+      of lilies and 4 varieties of freesias available.</p>
+
+    <ul>
+      <li>Lily Bulbs: $5 per bag (4 bulbs per bag)</li>
+      <li>Freesia Bulbs: $2.50 per bag (20 bulbs per bag)</li>
+    </ul>
+
+    <p>You can purchase bulbs online via our order form or if you prefer to purchase in person we have a stand outside
+      Rakaia Mobil.</p>
+
+    <p>If you're part of a group or organisation interested in fundraising with our bulbs, we’d love to hear from you.
+      While the bulbs are sold here at retail prices, there is an opportunity for approved groups to purchase them at
+      wholesale rates. To learn more, please contact the Rakaia Lions Treasurer directly:</p>
+
+    <ul>
+      <li>Bruce Kelly</li>
+      <li>📧 rakaia.treas@lionsclubs.org.nz</li>
+      <li>📞 027 437 5040</li>
+    </ul>
+  </div>
+
+  <!-- STEP 1: Order form -->
+  <div id="form-step-1" class="hidden">
+    <h2>Order Form</h2>
+    <p>Fill out the form below. Once submitted, you’ll receive a message with our bank transfer details. Please use your
+      name as the payment reference.</p>
+
+    <form id="orderFormStep1">
+      <div class="product-grid">
+
+        <!-- Repeat for each product -->
+        <div class="product-item">
+          <img src="images/tisento.jpg" alt="Tisento Lily">
+          <label>Tisento Lily</label>
+          <select name="tisentoLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Bellville Lily</label>
+          <select name="bellvilleLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>King Salmon Lily</label>
+          <select name="kingSalmonLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Concor D'or Lily</label>
+          <select name="concorDorLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Marengo Lily</label>
+          <select name="marengoLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Master Lily</label>
+          <select name="masterLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Pure Passion Lily</label>
+          <select name="purePassionLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Redford Lily</label>
+          <select name="redfordLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Siberia Lily</label>
+          <select name="siberiaLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Sorbonne Lily</label>
+          <select name="sorbonneLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/bellville.jpg" alt="Bellville Lily">
+          <label>Bell Lily</label>
+          <select name="bellLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="product-item">
+          <img src="images/yellow-strike.jpg" alt="Yellow Strike Lily">
+          <label>Yellow Strike Lily</label>
+          <select name="yellowStrikeLily">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <div class="left-button">
+          <button type="button" id="prevToStep0Btn">Previous</button>
+        </div>
+        <div class="right-button">
+          <button type="button" class="primary-btn" id="nextToStep2Btn">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- STEP 2: Customer details -->
+  <div id="form-step-2" class="hidden">
+    <h2>Customer Information</h2>
+
+    <form id="orderFormStep2">
+      <label>First Name</label>
+      <input type="text" name="firstName" required />
+
+      <label>Last Name</label>
+      <input type="text" name="lastName" required />
+
+      <label>Email</label>
+      <input type="email" name="email" required />
+
+      <label>Phone Number</label>
+      <input type="text" name="phone" required />
+
+      <h2 class="shipping">Shipping Information</h2>
+
+      <label>Street Address</label>
+      <input type="text" name="address" required />
+
+      <label>Apartment, unit (optional)</label>
+      <input type="text" name="unit" />
+
+      <label>Town/City</label>
+      <input type="text" name="city" required />
+
+      <label>Postal Code</label>
+      <input type="text" name="postcode" required />
+
+      <div id="order-summary" class="order-summary">
+        <h3>Your Order</h3>
+        <ul id="order-items"></ul>
+        <p><strong>Total: $<span id="order-total">0.00</span></strong></p>
+      </div>
+
+      <div class="nav-buttons">
+        <div class="left-button">
+          <button type="button" id="prevBtn">Previous</button>
+        </div>
+        <div class="right-button">
+          <button type="submit" class="primary-btn">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- STEP 3: Thank you message -->
+  <div id="form-step-3" class="hidden">
+    <h2>Thank you for your order!</h2>
+    <p id="thankYouMessage">Your order has been received. Please transfer your total amount of <strong>$0.00</strong>
+      to:</p>
+    <p><strong>Bank Account Name:</strong> Rakaia Lions</p>
+    <p><strong>Bank Account Number:</strong> 12-3456-7890123-00</p>
+    <p><strong>Reference:</strong> Your Full Name</p>
+    <p>You will also receive a confirmation email shortly.</p>
+  </div>
+
+  <footer>
+    <img src="images/LCI_emblem_2color_web.png" alt="Lions Club International Emblem">
+    <p>&copy; Rakaia Lions Club 2025</p>
+  </footer>
+
+</body>
+
+</html>
+
+
+  <!-- JS Script -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init("YINxA3tTTG7Jdxd0I");
+
+    const step0Div = document.getElementById('form-step-0');
+    const step1Div = document.getElementById('form-step-1');
+    const step2Div = document.getElementById('form-step-2');
+    const step3Div = document.getElementById('form-step-3');
+
+    const orderItemsList = document.getElementById('order-items');
+    const orderTotalEl = document.getElementById('order-total');
+
+    const prices = {
+      tisentoLily: 15,
+      bellvilleLily: 15,
+      redfordLily: 15,
+      yellowStrikeLily: 15,
+      kingSolomanLily: 15,
+      sorbonneLily: 15,
+      siberiaLily: 15,
+      purePassionLily: 15,
+      masterLily: 15,
+      marengoLily: 15,
+      concorDorLily: 15,
+      bellLily: 15,
+
+    };
+
+    document.getElementById('startOrderBtn').addEventListener('click', () => {
+      step0Div.classList.add('hidden');
+      step1Div.classList.remove('hidden');
+    });
+
+    document.getElementById('prevToStep0Btn').addEventListener('click', () => {
+      step1Div.classList.add('hidden');
+      step0Div.classList.remove('hidden');
+    });
+
+    document.getElementById('nextToStep2Btn').addEventListener('click', () => {
+      const formData = new FormData(document.getElementById('orderFormStep1'));
+      orderItemsList.innerHTML = '';
+      let total = 0;
+
+      for (const [name, qty] of formData.entries()) {
+        const quantity = parseInt(qty);
+        if (quantity > 0 && prices[name]) {
+          const itemTotal = quantity * prices[name];
+          total += itemTotal;
+          const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
+          const li = document.createElement('li');
+          li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
+          orderItemsList.appendChild(li);
+        }
+      }
+
+let totalQuantity = 0;
+for (const qty of formData.values()) {
+  const num = parseInt(qty);
+  if (Number.isInteger(num)) totalQuantity += num;
+}
+
+// Determine delivery cost based on total quantity
+let deliveryCost = 0;
+if (totalQuantity > 0 && totalQuantity <= 5) deliveryCost = 15.00;
+else if (totalQuantity <= 10) deliveryCost = 12.00;
+else if (totalQuantity <= 15) deliveryCost = 9.00;
+else deliveryCost = 0; // Free shipping if over 15
+
+// Show delivery cost in summary
+const deliveryLi = document.createElement('li');
+deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
+orderItemsList.appendChild(deliveryLi);
+
+total += deliveryCost;
+
+      orderTotalEl.textContent = total.toFixed(2);
+      step1Div.classList.add('hidden');
+      step2Div.classList.remove('hidden');
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      step2Div.classList.add('hidden');
+      step1Div.classList.remove('hidden');
+    });
+
+    document.getElementById('orderFormStep2').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData1 = new FormData(document.getElementById('orderFormStep1'));
+      const formData2 = new FormData(document.getElementById('orderFormStep2'));
+
+      const fullName = `${formData2.get("firstName")} ${formData2.get("lastName")}`;
+      let orderSummary = '';
+      let total = 0;
+
+      for (const [name, qty] of formData1.entries()) {
+        const quantity = parseInt(qty);
+        if (quantity > 0 && prices[name]) {
+          const itemTotal = quantity * prices[name];
+          total += itemTotal;
+          const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
+          orderSummary += `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}\n`;
+        }
+      }
+
+let totalQuantity = 0;
+for (const qty of formData1.values()) {
+  const num = parseInt(qty);
+  if (Number.isInteger(num)) totalQuantity += num;
+}
+
+// Determine delivery cost based on totalQuantity
+let deliveryCost = 0;
+if (totalQuantity > 0 && totalQuantity <= 5) deliveryCost = 6.00;
+else if (totalQuantity <= 10) deliveryCost = 12.00;
+else if (totalQuantity <= 15) deliveryCost = 9.00;
+else deliveryCost = 0; // Free shipping if over 15
+
+// Show delivery cost in summary
+const deliveryLi = document.createElement('li');
+deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
+orderItemsList.appendChild(deliveryLi);
+
+total += deliveryCost;
+
+      const customerParams = {
+        full_name: fullName,
+        email: formData2.get("email"),
+        phone: formData2.get("phone"),
+        address: `${formData2.get("address")}, ${formData2.get("city")} ${formData2.get("postcode")}`,
+        order: orderSummary.trim(),
+        total: `$${total.toFixed(2)}`
+      };
+
+
+      try {
+        await emailjs.send("service_mqu115s", "template_3dhextm", customerParams);
+        await emailjs.send("service_mqu115s", "template_ae2wm9f", customerParams);
+
+        const totalAmount = orderTotalEl.textContent;
+        const thankYouMessage = step3Div.querySelector('p');
+        thankYouMessage.innerHTML = `Your order has been received. Please transfer your total amount of <strong>$${totalAmount}</strong> to:`;
+
+        step2Div.classList.add('hidden');
+        step3Div.classList.remove('hidden');
+      } catch (err) {
+        alert("There was an error submitting your order. Please try again.");
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+
+</html>
