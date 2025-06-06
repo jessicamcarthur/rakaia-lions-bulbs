@@ -176,3 +176,21 @@ footer {
 footer img {
   width: 80px;
 }
+
+@media (max-width: 768px) {
+  body {
+    font-size: 22px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  p, label, input, select, button {
+    font-size: 22px;
+  }
+}
