@@ -183,10 +183,14 @@ footer img {
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 35px;
   }
 
   h2 {
+    font-size: 28px;
+  }
+
+  h3 {
     font-size: 28px;
   }
 
