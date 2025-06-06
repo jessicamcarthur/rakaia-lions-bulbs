@@ -30,7 +30,7 @@
     </ul>
 
     <p>You can purchase bulbs online via our order form or if you prefer to purchase in person we have a stand outside
-      Rakaia Mobil.</p>
+      Rakaia Mobil. Orders are processed and sent out each Monday, so be sure to get your order in before 11pm Sunday night to make the weekly shipment.</p>
 
     <p>If you're part of a group or organisation interested in fundraising with our bulbs, we’d love to hear from you.
       While the bulbs are sold here at retail prices, there is an opportunity for approved groups to purchase them at
@@ -290,158 +290,158 @@
 </html>
 
 
-  <!-- JS Script -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init("YINxA3tTTG7Jdxd0I");
+<!-- JS Script -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init("YINxA3tTTG7Jdxd0I");
 
-    const step0Div = document.getElementById('form-step-0');
-    const step1Div = document.getElementById('form-step-1');
-    const step2Div = document.getElementById('form-step-2');
-    const step3Div = document.getElementById('form-step-3');
+  const step0Div = document.getElementById('form-step-0');
+  const step1Div = document.getElementById('form-step-1');
+  const step2Div = document.getElementById('form-step-2');
+  const step3Div = document.getElementById('form-step-3');
 
-    const orderItemsList = document.getElementById('order-items');
-    const orderTotalEl = document.getElementById('order-total');
+  const orderItemsList = document.getElementById('order-items');
+  const orderTotalEl = document.getElementById('order-total');
 
-    const prices = {
-      tisentoLily: 15,
-      bellvilleLily: 15,
-      redfordLily: 15,
-      yellowStrikeLily: 15,
-      kingSolomanLily: 15,
-      sorbonneLily: 15,
-      siberiaLily: 15,
-      purePassionLily: 15,
-      masterLily: 15,
-      marengoLily: 15,
-      concorDorLily: 15,
-      bellLily: 15,
+  const prices = {
+    tisentoLily: 15,
+    bellvilleLily: 15,
+    redfordLily: 15,
+    yellowStrikeLily: 15,
+    kingSolomanLily: 15,
+    sorbonneLily: 15,
+    siberiaLily: 15,
+    purePassionLily: 15,
+    masterLily: 15,
+    marengoLily: 15,
+    concorDorLily: 15,
+    bellLily: 15,
 
+  };
+
+  document.getElementById('startOrderBtn').addEventListener('click', () => {
+    step0Div.classList.add('hidden');
+    step1Div.classList.remove('hidden');
+  });
+
+  document.getElementById('prevToStep0Btn').addEventListener('click', () => {
+    step1Div.classList.add('hidden');
+    step0Div.classList.remove('hidden');
+  });
+
+  document.getElementById('nextToStep2Btn').addEventListener('click', () => {
+    const formData = new FormData(document.getElementById('orderFormStep1'));
+    orderItemsList.innerHTML = '';
+    let total = 0;
+
+    for (const [name, qty] of formData.entries()) {
+      const quantity = parseInt(qty);
+      if (quantity > 0 && prices[name]) {
+        const itemTotal = quantity * prices[name];
+        total += itemTotal;
+        const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
+        const li = document.createElement('li');
+        li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
+        orderItemsList.appendChild(li);
+      }
+    }
+
+    let totalQuantity = 0;
+    for (const qty of formData.values()) {
+      const num = parseInt(qty);
+      if (Number.isInteger(num)) totalQuantity += num;
+    }
+
+    // Determine delivery cost based on total quantity
+    let deliveryCost = 0;
+    if (totalQuantity > 0 && totalQuantity <= 5) deliveryCost = 15.00;
+    else if (totalQuantity <= 10) deliveryCost = 12.00;
+    else if (totalQuantity <= 15) deliveryCost = 9.00;
+    else deliveryCost = 0; // Free shipping if over 15
+
+    // Show delivery cost in summary
+    const deliveryLi = document.createElement('li');
+    deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
+    orderItemsList.appendChild(deliveryLi);
+
+    total += deliveryCost;
+
+    orderTotalEl.textContent = total.toFixed(2);
+    step1Div.classList.add('hidden');
+    step2Div.classList.remove('hidden');
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    step2Div.classList.add('hidden');
+    step1Div.classList.remove('hidden');
+  });
+
+  document.getElementById('orderFormStep2').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData1 = new FormData(document.getElementById('orderFormStep1'));
+    const formData2 = new FormData(document.getElementById('orderFormStep2'));
+
+    const fullName = `${formData2.get("firstName")} ${formData2.get("lastName")}`;
+    let orderSummary = '';
+    let total = 0;
+
+    for (const [name, qty] of formData1.entries()) {
+      const quantity = parseInt(qty);
+      if (quantity > 0 && prices[name]) {
+        const itemTotal = quantity * prices[name];
+        total += itemTotal;
+        const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
+        orderSummary += `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}\n`;
+      }
+    }
+
+    let totalQuantity = 0;
+    for (const qty of formData1.values()) {
+      const num = parseInt(qty);
+      if (Number.isInteger(num)) totalQuantity += num;
+    }
+
+    // Determine delivery cost based on totalQuantity
+    let deliveryCost = 0;
+    if (totalQuantity > 0 && totalQuantity <= 5) deliveryCost = 6.00;
+    else if (totalQuantity <= 10) deliveryCost = 12.00;
+    else if (totalQuantity <= 15) deliveryCost = 9.00;
+    else deliveryCost = 0; // Free shipping if over 15
+
+    // Show delivery cost in summary
+    const deliveryLi = document.createElement('li');
+    deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
+    orderItemsList.appendChild(deliveryLi);
+
+    total += deliveryCost;
+
+    const customerParams = {
+      full_name: fullName,
+      email: formData2.get("email"),
+      phone: formData2.get("phone"),
+      address: `${formData2.get("address")}, ${formData2.get("city")} ${formData2.get("postcode")}`,
+      order: orderSummary.trim(),
+      total: `$${total.toFixed(2)}`
     };
 
-    document.getElementById('startOrderBtn').addEventListener('click', () => {
-      step0Div.classList.add('hidden');
-      step1Div.classList.remove('hidden');
-    });
 
-    document.getElementById('prevToStep0Btn').addEventListener('click', () => {
-      step1Div.classList.add('hidden');
-      step0Div.classList.remove('hidden');
-    });
+    try {
+      await emailjs.send("service_mqu115s", "template_3dhextm", customerParams);
+      await emailjs.send("service_mqu115s", "template_ae2wm9f", customerParams);
 
-    document.getElementById('nextToStep2Btn').addEventListener('click', () => {
-      const formData = new FormData(document.getElementById('orderFormStep1'));
-      orderItemsList.innerHTML = '';
-      let total = 0;
+      const totalAmount = orderTotalEl.textContent;
+      const thankYouMessage = step3Div.querySelector('p');
+      thankYouMessage.innerHTML = `Your order has been received. Please transfer your total amount of <strong>$${totalAmount}</strong> to:`;
 
-      for (const [name, qty] of formData.entries()) {
-        const quantity = parseInt(qty);
-        if (quantity > 0 && prices[name]) {
-          const itemTotal = quantity * prices[name];
-          total += itemTotal;
-          const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
-          const li = document.createElement('li');
-          li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
-          orderItemsList.appendChild(li);
-        }
-      }
-
-let totalQuantity = 0;
-for (const qty of formData.values()) {
-  const num = parseInt(qty);
-  if (Number.isInteger(num)) totalQuantity += num;
-}
-
-// Determine delivery cost based on total quantity
-let deliveryCost = 0;
-if (totalQuantity > 0 && totalQuantity <= 5) deliveryCost = 15.00;
-else if (totalQuantity <= 10) deliveryCost = 12.00;
-else if (totalQuantity <= 15) deliveryCost = 9.00;
-else deliveryCost = 0; // Free shipping if over 15
-
-// Show delivery cost in summary
-const deliveryLi = document.createElement('li');
-deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
-orderItemsList.appendChild(deliveryLi);
-
-total += deliveryCost;
-
-      orderTotalEl.textContent = total.toFixed(2);
-      step1Div.classList.add('hidden');
-      step2Div.classList.remove('hidden');
-    });
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
       step2Div.classList.add('hidden');
-      step1Div.classList.remove('hidden');
-    });
-
-    document.getElementById('orderFormStep2').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const formData1 = new FormData(document.getElementById('orderFormStep1'));
-      const formData2 = new FormData(document.getElementById('orderFormStep2'));
-
-      const fullName = `${formData2.get("firstName")} ${formData2.get("lastName")}`;
-      let orderSummary = '';
-      let total = 0;
-
-      for (const [name, qty] of formData1.entries()) {
-        const quantity = parseInt(qty);
-        if (quantity > 0 && prices[name]) {
-          const itemTotal = quantity * prices[name];
-          total += itemTotal;
-          const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
-          orderSummary += `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}\n`;
-        }
-      }
-
-let totalQuantity = 0;
-for (const qty of formData1.values()) {
-  const num = parseInt(qty);
-  if (Number.isInteger(num)) totalQuantity += num;
-}
-
-// Determine delivery cost based on totalQuantity
-let deliveryCost = 0;
-if (totalQuantity > 0 && totalQuantity <= 5) deliveryCost = 6.00;
-else if (totalQuantity <= 10) deliveryCost = 12.00;
-else if (totalQuantity <= 15) deliveryCost = 9.00;
-else deliveryCost = 0; // Free shipping if over 15
-
-// Show delivery cost in summary
-const deliveryLi = document.createElement('li');
-deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
-orderItemsList.appendChild(deliveryLi);
-
-total += deliveryCost;
-
-      const customerParams = {
-        full_name: fullName,
-        email: formData2.get("email"),
-        phone: formData2.get("phone"),
-        address: `${formData2.get("address")}, ${formData2.get("city")} ${formData2.get("postcode")}`,
-        order: orderSummary.trim(),
-        total: `$${total.toFixed(2)}`
-      };
-
-
-      try {
-        await emailjs.send("service_mqu115s", "template_3dhextm", customerParams);
-        await emailjs.send("service_mqu115s", "template_ae2wm9f", customerParams);
-
-        const totalAmount = orderTotalEl.textContent;
-        const thankYouMessage = step3Div.querySelector('p');
-        thankYouMessage.innerHTML = `Your order has been received. Please transfer your total amount of <strong>$${totalAmount}</strong> to:`;
-
-        step2Div.classList.add('hidden');
-        step3Div.classList.remove('hidden');
-      } catch (err) {
-        alert("There was an error submitting your order. Please try again.");
-        console.error(err);
-      }
-    });
-  </script>
+      step3Div.classList.remove('hidden');
+    } catch (err) {
+      alert("There was an error submitting your order. Please try again.");
+      console.error(err);
+    }
+  });
+</script>
 </body>
 
 </html>
