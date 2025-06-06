@@ -17,11 +17,11 @@ h1, h2, h3 {
   margin: 0 0 10px;
 }
 
-h1 { font-size: 26px; }
-h2 { font-size: 22px; }
-h3 { font-size: 16px; font-weight: 500; color: #444; }
+h1 { font-size: 28px; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; font-weight: 500; color: #444; }
 
-p, ul, label { font-size: 15px; }
+p, ul, label { font-size: 17px; }
 li { font-weight: bold; }
 
 .hero-img {
