@@ -462,18 +462,14 @@
 
       // Send confirmation to customer
       await emailjs.sendForm(
-        "service_ysispk8",
-        "template_b8g295h",      // Template ID for the user
-        form,
-        "YINxA3tTTG7Jdxd0I"      // Public key
+        "service_ysispk8", "template_b8g295h", form,
+        "YINxA3tTTG7Jdxd0I" // Public key
       );
 
       // Send order details to owner
       await emailjs.sendForm(
-        "service_ysispk8",
-        "template_nsusrii",      // Template ID for the owner
-        form,
-        "YINxA3tTTG7Jdxd0I"      // Public key
+        "service_ysispk8", "template_nsusrii", form,
+        "YINxA3tTTG7Jdxd0I" // Public key
       );
 
       showStep(3);
