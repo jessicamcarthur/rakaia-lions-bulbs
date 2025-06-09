@@ -52,7 +52,7 @@
     <p>Fill out the form below. Once submitted, you’ll receive a message with our bank transfer details. Please use your
       name as the payment reference.</p>
 
-    <!-- <form id="orderFormStep1">
+ <form id="orderFormStep1">
       <div class="product-grid">
 
         <div class="product-item">
@@ -282,72 +282,75 @@
       </div>
     </form>
   </div>
--->
 
-  <!-- STEP 2: Customer details -->
-  <div id="form-step-2" class="hidden">
-    <h2>Customer Information</h2>
+    <!-- STEP 2: Customer details -->
+    <div id="form-step-2" class="hidden">
+      <h2>Customer Information</h2>
 
-    <form id="orderFormStep2">
-      <label>First Name</label>
-      <input type="text" name="firstName" required />
+      <form id="orderFormStep2">
+        <label>First Name</label>
+        <input type="text" name="firstName" required />
 
-      <label>Last Name</label>
-      <input type="text" name="lastName" required />
+        <label>Last Name</label>
+        <input type="text" name="lastName" required />
 
-      <label>Email</label>
-      <input type="email" name="email" required />
+        <label>Email</label>
+        <input type="email" name="email" required />
 
-      <label>Phone Number</label>
-      <input type="text" name="phone" required />
+        <label>Phone Number</label>
+        <input type="text" name="phone" required />
 
-      <h2 class="shipping">Shipping Information</h2>
+        <h2 class="shipping">Shipping Information</h2>
 
-      <label>Street Address</label>
-      <input type="text" name="address" required />
+        <label>Street Address</label>
+        <input type="text" name="address" required />
 
-      <label>Apartment, unit (optional)</label>
-      <input type="text" name="unit" />
+        <label>Apartment, unit (optional)</label>
+        <input type="text" name="unit" />
 
-      <label>Town/City</label>
-      <input type="text" name="city" required />
+        <label>Town/City</label>
+        <input type="text" name="city" required />
 
-      <label>Postal Code</label>
-      <input type="text" name="postcode" required />
+        <label>Postal Code</label>
+        <input type="text" name="postcode" required />
 
-      <div id="order-summary" class="order-summary">
-        <h3>Your Order</h3>
-        <ul id="order-items"></ul>
-        <p><strong>Total: $<span id="order-total">0.00</span></strong></p>
-      </div>
+        <input type="hidden" name="total" id="totalField">
 
-      <div class="nav-buttons">
-        <div class="left-button">
-          <button type="button" id="prevBtn">Previous</button>
+        <input type="hidden" name="order" id="orderField">
+
+        <div id="order-summary" class="order-summary">
+          <h3>Your Order</h3>
+          <ul id="order-items"></ul>
+          <p><strong>Total: $<span id="order-total">0.00</span></strong></p>
         </div>
-        <div class="right-button">
-          <button type="submit" class="primary-btn">Submit</button>
+
+        <div class="nav-buttons">
+          <div class="left-button">
+            <button type="button" id="prevBtn">Previous</button>
+          </div>
+          <div class="right-button">
+            <button type="submit" class="primary-btn">Submit</button>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
 
-  <!-- STEP 3: Thank you message -->
-  <div id="form-step-3" class="hidden">
-    <h2>Thank you for your order!</h2>
-    <p id="thankYouMessage">Your order has been received. Please transfer your total amount of <strong
-        id="finalAmount">$0.00</strong>
-      to:</p>
-    <p>Bank Account Name: Rakaia Lions</p>
-    <p>Bank Account Number: 12-3456-7890123-00</p>
-    <p>Reference: Your Full Name</p>
-    <p>You will also receive a confirmation email shortly.</p>
-  </div>
+    <!-- STEP 3: Thank you message -->
+    <div id="form-step-3" class="hidden">
+      <h2>Thank you for your order!</h2>
+      <p id="thankYouMessage">Your order has been received. Please transfer your total amount of <strong
+          id="finalAmount">$0.00</strong>
+        to:</p>
+      <p>Bank Account Name: Rakaia Lions</p>
+      <p>Bank Account Number: 12-3456-7890123-00</p>
+      <p>Reference: Your Full Name</p>
+      <p>You will also receive a confirmation email shortly.</p>
+    </div>
 
-  <footer>
-    <img src="images/LCI_emblem_2color_web.png" alt="Lions Club International Emblem">
-    <p>&copy; Rakaia Lions Club 2025</p>
-  </footer>
+    <footer>
+      <img src="images/LCI_emblem_2color_web.png" alt="Lions Club International Emblem">
+      <p>&copy; Rakaia Lions Club 2025</p>
+    </footer>
 
 </body>
 
@@ -495,17 +498,41 @@
   document.getElementById('orderFormStep2').addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    try {
+try {
+  const form = event.target;
 
-      step2Div.classList.add('hidden');
-      step3Div.classList.remove('hidden');
+  let orderSummary = '';
+    orderItemsList.querySelectorAll('li').forEach(li => {
+      orderSummary += li.textContent + '\n';
+    });
+    document.getElementById('orderField').value = orderSummary;
 
-      finalAmountEl.textContent = orderTotalEl.textContent;
+    document.getElementById('totalField').value = orderTotalEl.textContent;
 
-    } catch (error) {
-      alert("There was an error submitting your order. Please try again.");
-      console.error(error);
-    }
+  // Send confirmation to the user
+  await emailjs.sendForm(
+    "service_ysispk8",       
+    "template_b8g295h",      // Template ID for the user
+    form,                    
+    "YINxA3tTTG7Jdxd0I"      // Public key
+  );
+
+  // Send order details to the owner
+  await emailjs.sendForm(
+    "service_ysispk8",       
+    "template_nsusrii",      // Template ID for the owner
+    form,                    
+    "YINxA3tTTG7Jdxd0I"      // Public key
+  );
+
+  step2Div.classList.add('hidden');
+  step3Div.classList.remove('hidden');
+  finalAmountEl.textContent = orderTotalEl.textContent;
+
+} catch (error) {
+  alert("There was an error submitting your order. Please try again.");
+  console.error(error);
+}
   });
 </script>
 </body>
