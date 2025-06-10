@@ -360,7 +360,7 @@
 <!-- JS Script -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  emailjs.init("YINxA3tTTG7Jdxd0I");
+  emailjs.init("6URWzvPDCKvplKWVm");
 
   const steps = {
     0: document.getElementById('form-step-0'),
@@ -463,13 +463,13 @@
       // Send confirmation to customer
       await emailjs.sendForm(
         "service_ysispk8", "template_b8g295h", form,
-        "YINxA3tTTG7Jdxd0I" // Public key
+        "6URWzvPDCKvplKWVm" // Public key
       );
 
       // Send order details to owner
       await emailjs.sendForm(
         "service_ysispk8", "template_nsusrii", form,
-        "YINxA3tTTG7Jdxd0I" // Public key
+        "6URWzvPDCKvplKWVm" // Public key
       );
 
       showStep(3);
