@@ -459,6 +459,21 @@
 
       document.getElementById('orderField').value = orderSummary;
       document.getElementById('totalField').value = orderTotalEl.textContent;
+      
+      // Combine first name and last name into full_name
+      const firstName = form.querySelector('[name="firstName"]').value;
+      const lastName = form.querySelector('[name="lastName"]').value;
+      const fullName = `${firstName} ${lastName}`;
+
+      // Set the full_name field value
+      let fullNameField = form.querySelector('[name="full_name"]');
+      if (!fullNameField) {
+        fullNameField = document.createElement('input');
+        fullNameField.type = 'hidden';
+        fullNameField.name = 'full_name';
+        form.appendChild(fullNameField);
+      }
+      fullNameField.value = fullName;
 
       // Send confirmation to customer
       await emailjs.sendForm(
