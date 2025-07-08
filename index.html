@@ -421,12 +421,9 @@
 
       // Calculate delivery cost based on quantity
       let deliveryCost = 0;
-      if (totalQuantity > 0) {
-        if (totalQuantity <= 5) deliveryCost = 15.00;
-        else if (totalQuantity <= 10) deliveryCost = 12.00;
-        else if (totalQuantity <= 15) deliveryCost = 9.00;
-        else deliveryCost = 0; // Free delivery for > 15 items
-      }
+      if (total > 0 && total <= 60) deliveryCost = 8.00;
+      else if (total <= 120) deliveryCost = 10.00;
+      else deliveryCost = 12.00;
 
       // Show delivery cost
       if (deliveryCost > 0) {
@@ -459,7 +456,7 @@
 
       document.getElementById('orderField').value = orderSummary;
       document.getElementById('totalField').value = orderTotalEl.textContent;
-      
+
       // Combine first name and last name into full_name
       const firstName = form.querySelector('[name="firstName"]').value;
       const lastName = form.querySelector('[name="lastName"]').value;
