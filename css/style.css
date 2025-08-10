@@ -82,8 +82,17 @@ button[type="submit"]:hover,
   margin-top: 30px;
 }
 
+.nav-buttons button {
+  padding: 10px 20px;
+  margin: 0 20px;
+}
+
 .left-button, .right-button {
   flex-shrink: 0;
+}
+
+#form-step-0 ~ .nav-buttons {
+  display: none;
 }
 
 /* Section layout */
