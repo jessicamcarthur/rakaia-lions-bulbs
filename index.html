@@ -422,150 +422,150 @@
     <p>&copy; Rakaia Lions Club 2025</p>
   </footer>
 
-</body>
+  <!-- JS Script -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init("6URWzvPDCKvplKWVm");
 
-</html>
+    const steps = {
+      0: document.getElementById('form-step-0'),
+      1: document.getElementById('form-step-1'),
+      2: document.getElementById('form-step-2'),
+      3: document.getElementById('form-step-3'),
+    };
 
+    const orderItemsList = document.getElementById('order-items');
+    const orderTotalEl = document.getElementById('order-total');
+    const finalAmountEl = document.getElementById('finalAmount');
 
-<!-- JS Script -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  emailjs.init("6URWzvPDCKvplKWVm");
+    const prices = {
+      tisento: 15,
+      bellville: 15,
+      redford: 15,
+      yellowStrike: 15,
+      sorbonne: 15,
+      siberia: 15,
+      purePassion: 15,
+      master: 15,
+      concorDor: 15,
+      whiteTornado: 15,
+      tableDance: 15,
+      shineOn: 15,
+      redEyes: 15,
+      kadango: 15,
+      casablanca: 15,
+    };
 
-  const steps = {
-    0: document.getElementById('form-step-0'),
-    1: document.getElementById('form-step-1'),
-    2: document.getElementById('form-step-2'),
-    3: document.getElementById('form-step-3'),
-  };
+    function showStep(stepToShow) {
+      Object.values(steps).forEach(step => step.classList.add('hidden'));
+      steps[stepToShow].classList.remove('hidden');
 
-  const orderItemsList = document.getElementById('order-items');
-  const orderTotalEl = document.getElementById('order-total');
-  const finalAmountEl = document.getElementById('finalAmount');
+      const navButtons = document.querySelectorAll('.nav-buttons');
+      navButtons.forEach(nav => {
+        nav.style.display = stepToShow === 0 ? 'none' : 'flex';
+      });
+    }
 
-  const prices = {
-    tisento: 15,
-    bellville: 15,
-    redford: 15,
-    yellowStrike: 15,
-    sorbonne: 15,
-    siberia: 15,
-    purePassion: 15,
-    master: 15,
-    concorDor: 15,
-    whiteTornado: 15,
-    tableDance: 15,
-    shineOn: 15,
-    redEyes: 15,
-    kadango: 15,
-    casablanca: 15,
-  };
+    document.getElementById('startOrderBtn').addEventListener('click', () => showStep(1));
+    document.getElementById('prevToStep0Btn').addEventListener('click', () => showStep(0));
+    document.getElementById('prevBtn').addEventListener('click', () => showStep(1));
 
-  function showStep(stepToShow) {
-    Object.values(steps).forEach(step => step.classList.add('hidden'));
-    steps[stepToShow].classList.remove('hidden');
-  }
+    document.getElementById('nextToStep2Btn').addEventListener('click', () => {
+      try {
+        const formData = new FormData(document.getElementById('orderFormStep1'));
+        orderItemsList.innerHTML = '';
+        let total = 0;
+        let totalQuantity = 0;
 
-  document.getElementById('startOrderBtn').addEventListener('click', () => showStep(1));
-  document.getElementById('prevToStep0Btn').addEventListener('click', () => showStep(0));
-  document.getElementById('prevBtn').addEventListener('click', () => showStep(1));
+        // List ordered items
+        for (const [name, qty] of formData.entries()) {
+          const quantity = parseInt(qty);
+          if (quantity > 0 && prices[name]) {
+            const itemTotal = quantity * prices[name];
+            total += itemTotal;
+            totalQuantity += quantity;
 
-  document.getElementById('nextToStep2Btn').addEventListener('click', () => {
-    try {
-      const formData = new FormData(document.getElementById('orderFormStep1'));
-      orderItemsList.innerHTML = '';
-      let total = 0;
-      let totalQuantity = 0;
-
-      // List ordered items
-      for (const [name, qty] of formData.entries()) {
-        const quantity = parseInt(qty);
-        if (quantity > 0 && prices[name]) {
-          const itemTotal = quantity * prices[name];
-          total += itemTotal;
-          totalQuantity += quantity;
-
-          const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
-          const li = document.createElement('li');
-          li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
-          orderItemsList.appendChild(li);
+            const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
+            const li = document.createElement('li');
+            li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
+            orderItemsList.appendChild(li);
+          }
         }
+
+        // Calculate delivery cost based on quantity
+        let deliveryCost = 0;
+        if (total > 0 && total <= 60) deliveryCost = 8.00;
+        else if (total <= 120) deliveryCost = 10.00;
+        else deliveryCost = 12.00;
+
+        // Show delivery cost
+        if (deliveryCost > 0) {
+          const deliveryLi = document.createElement('li');
+          deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
+          orderItemsList.appendChild(deliveryLi);
+        }
+
+        total += deliveryCost;
+        orderTotalEl.textContent = total.toFixed(2);
+
+        showStep(2);
+
+      } catch (err) {
+        alert("There was an error processing your order. Please try again.");
+        console.error(err);
       }
+    });
 
-      // Calculate delivery cost based on quantity
-      let deliveryCost = 0;
-      if (total > 0 && total <= 60) deliveryCost = 8.00;
-      else if (total <= 120) deliveryCost = 10.00;
-      else deliveryCost = 12.00;
+    document.getElementById('orderFormStep2').addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-      // Show delivery cost
-      if (deliveryCost > 0) {
-        const deliveryLi = document.createElement('li');
-        deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
-        orderItemsList.appendChild(deliveryLi);
+      try {
+        const form = event.target;
+
+        // Create order summary text
+        const orderSummary = Array.from(orderItemsList.querySelectorAll('li'))
+          .map(li => li.textContent)
+          .join('\n');
+
+        document.getElementById('orderField').value = orderSummary;
+        document.getElementById('totalField').value = orderTotalEl.textContent;
+
+        // Combine first name and last name into full_name
+        const firstName = form.querySelector('[name="firstName"]').value;
+        const lastName = form.querySelector('[name="lastName"]').value;
+        const fullName = `${firstName} ${lastName}`;
+
+        // Set the full_name field value
+        let fullNameField = form.querySelector('[name="full_name"]');
+        if (!fullNameField) {
+          fullNameField = document.createElement('input');
+          fullNameField.type = 'hidden';
+          fullNameField.name = 'full_name';
+          form.appendChild(fullNameField);
+        }
+        fullNameField.value = fullName;
+
+        // Send confirmation to customer
+        await emailjs.sendForm(
+          "service_ysispk8", "template_b8g295h", form,
+          "6URWzvPDCKvplKWVm" // Public key
+        );
+
+        // Send order details to owner
+        await emailjs.sendForm(
+          "service_ysispk8", "template_nzusrii", form,
+          "6URWzvPDCKvplKWVm" // Public key
+        );
+
+        showStep(3);
+        finalAmountEl.textContent = orderTotalEl.textContent;
+
+      } catch (error) {
+        alert("There was an error submitting your order. Please try again.");
+        console.error(error);
       }
-
-      total += deliveryCost;
-      orderTotalEl.textContent = total.toFixed(2);
-
-      showStep(2);
-
-    } catch (err) {
-      alert("There was an error processing your order. Please try again.");
-      console.error(err);
-    }
-  });
-
-  document.getElementById('orderFormStep2').addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    try {
-      const form = event.target;
-
-      // Create order summary text
-      const orderSummary = Array.from(orderItemsList.querySelectorAll('li'))
-        .map(li => li.textContent)
-        .join('\n');
-
-      document.getElementById('orderField').value = orderSummary;
-      document.getElementById('totalField').value = orderTotalEl.textContent;
-
-      // Combine first name and last name into full_name
-      const firstName = form.querySelector('[name="firstName"]').value;
-      const lastName = form.querySelector('[name="lastName"]').value;
-      const fullName = `${firstName} ${lastName}`;
-
-      // Set the full_name field value
-      let fullNameField = form.querySelector('[name="full_name"]');
-      if (!fullNameField) {
-        fullNameField = document.createElement('input');
-        fullNameField.type = 'hidden';
-        fullNameField.name = 'full_name';
-        form.appendChild(fullNameField);
-      }
-      fullNameField.value = fullName;
-
-      // Send confirmation to customer
-      await emailjs.sendForm(
-        "service_ysispk8", "template_b8g295h", form,
-        "6URWzvPDCKvplKWVm" // Public key
-      );
-
-      // Send order details to owner
-      await emailjs.sendForm(
-        "service_ysispk8", "template_nzusrii", form,
-        "6URWzvPDCKvplKWVm" // Public key
-      );
-
-      showStep(3);
-      finalAmountEl.textContent = orderTotalEl.textContent;
-
-    } catch (error) {
-      alert("There was an error submitting your order. Please try again.");
-      console.error(error);
-    }
-  });
-</script>
+    });
+  </script>
 </body>
 
 </html>
