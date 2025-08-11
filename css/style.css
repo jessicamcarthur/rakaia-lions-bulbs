@@ -79,7 +79,7 @@ button.primary-btn:hover {
 }
 
 .nav-buttons.hidden {
-  display: none !important;
+  display: none;
 }
 
 .nav-buttons button {
