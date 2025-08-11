@@ -189,7 +189,7 @@ footer img {
   height: 80px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 200px) {
   body {
     font-size: 22px;
   }
