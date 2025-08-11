@@ -320,37 +320,27 @@
             <option value="10">10</option>
           </select>
         </div>
-      </div>
 
-      <div class="product-item">
-        <img src="images/yellow-strike.png" alt="Yellow Strike Lily">
-        <label>Yellow Strike Lily</label>
-        <p class="description">Yellow oriental hybrid lily</p>
-        <select name="yellowStrike">
-          <option value="0">Quantity</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
+        <div class="product-item">
+          <img src="images/yellow-strike.png" alt="Yellow Strike Lily">
+          <label>Yellow Strike Lily</label>
+          <p class="description">Yellow oriental hybrid lily</p>
+          <select name="yellowStrike">
+            <option value="0">Quantity</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
       </div>
-  </div>
-
-  <div class="nav-buttons">
-    <div class="left-button">
-      <button type="button" id="prevToStep0Btn">Previous</button>
-    </div>
-    <div class="right-button">
-      <button type="button" class="primary-btn" id="nextToStep2Btn">Next</button>
-    </div>
-  </div>
-  </form>
+    </form>
   </div>
 
   <!-- STEP 2: Customer details -->
@@ -393,15 +383,6 @@
         <ul id="order-items"></ul>
         <p><strong>Total: $<span id="order-total">0.00</span></strong></p>
       </div>
-
-      <div class="nav-buttons">
-        <div class="left-button">
-          <button type="button" id="prevBtn">Previous</button>
-        </div>
-        <div class="right-button">
-          <button type="submit" class="primary-btn">Submit</button>
-        </div>
-      </div>
     </form>
   </div>
 
@@ -417,10 +398,18 @@
     <p>You will also receive a confirmation email shortly.</p>
   </div>
 
+  <div class="nav-buttons hidden" id="navButtons">
+    <button id="prevBtn" type="button">Previous</button>
+    <button id="nextBtn" type="button" class="primary-btn">Next</button>
+    <button id="submitBtn" type="submit" class="primary-btn hidden">Submit</button>
+  </div>
+
   <footer>
     <img src="images/LCI_emblem_2color_web.png" alt="Lions Club International Emblem">
     <p>&copy; Rakaia Lions Club 2025</p>
   </footer>
+
+
 
   <!-- JS Script -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -434,13 +423,21 @@
       3: document.getElementById('form-step-3'),
     };
 
+    // Cached DOM elements for order summary
     const orderItemsList = document.getElementById('order-items');
     const orderTotalEl = document.getElementById('order-total');
     const finalAmountEl = document.getElementById('finalAmount');
 
+    // Navigation buttons container and buttons
+    const navButtonsContainer = document.getElementById('navButtons');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Prices for each product - corrected "belville" to match HTML
     const prices = {
       tisento: 15,
-      bellville: 15,
+      belville: 15, // Fixed spelling to match HTML
       redford: 15,
       yellowStrike: 15,
       sorbonne: 15,
@@ -456,116 +453,221 @@
       casablanca: 15,
     };
 
-    function showStep(stepToShow) {
-      Object.values(steps).forEach(step => step.classList.add('hidden'));
-      steps[stepToShow].classList.remove('hidden');
+    // Current step tracker
+    let currentStep = 0;
 
-      const navButtons = document.querySelectorAll('.nav-buttons');
-      navButtons.forEach(nav => {
-        nav.style.display = stepToShow === 0 ? 'none' : 'flex';
+    // Function to show a particular step and update nav buttons visibility
+    function showStep(stepToShow) {
+      // Hide all steps
+      Object.values(steps).forEach(step => {
+        if (step) step.classList.add('hidden');
+      });
+
+      // Show requested step
+      if (steps[stepToShow]) {
+        steps[stepToShow].classList.remove('hidden');
+        currentStep = stepToShow;
+      }
+
+      // Control nav buttons visibility based on step
+      if (navButtonsContainer) {
+        if (stepToShow === 0 || stepToShow === 3) {
+          // Hide nav buttons on step 0 and 3
+          navButtonsContainer.classList.add('hidden');
+        } else {
+          // Show nav buttons on steps 1 and 2
+          navButtonsContainer.classList.remove('hidden');
+
+          if (stepToShow === 1) {
+            // Step 1: Show Previous + Next, hide Submit
+            if (prevBtn) prevBtn.style.display = 'inline-block';
+            if (nextBtn) nextBtn.style.display = 'inline-block';
+            if (submitBtn) submitBtn.style.display = 'none';
+          } else if (stepToShow === 2) {
+            // Step 2: Show Previous + Submit, hide Next
+            if (prevBtn) prevBtn.style.display = 'inline-block';
+            if (nextBtn) nextBtn.style.display = 'none';
+            if (submitBtn) submitBtn.style.display = 'inline-block';
+          }
+        }
+      }
+    }
+
+    // Initialize - show step 0
+    showStep(0);
+
+    // Event listeners for buttons
+
+    // Start ordering: step 0 -> step 1
+    const startOrderBtn = document.getElementById('startOrderBtn');
+    if (startOrderBtn) {
+      startOrderBtn.addEventListener('click', () => {
+        console.log('Start Order button clicked');
+        showStep(1);
       });
     }
 
-    document.getElementById('startOrderBtn').addEventListener('click', () => showStep(1));
-    document.getElementById('prevToStep0Btn').addEventListener('click', () => showStep(0));
-    document.getElementById('prevBtn').addEventListener('click', () => showStep(1));
+    // Previous button behavior
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        console.log('Previous button clicked, current step:', currentStep);
+        if (currentStep === 2) {
+          showStep(1);
+        } else if (currentStep === 1) {
+          showStep(0);
+        }
+      });
+    }
 
-    document.getElementById('nextToStep2Btn').addEventListener('click', () => {
-      try {
-        const formData = new FormData(document.getElementById('orderFormStep1'));
-        orderItemsList.innerHTML = '';
-        let total = 0;
-        let totalQuantity = 0;
+    // Next button behavior (step 1 -> 2)
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        console.log('Next button clicked');
 
-        // List ordered items
-        for (const [name, qty] of formData.entries()) {
-          const quantity = parseInt(qty);
-          if (quantity > 0 && prices[name]) {
-            const itemTotal = quantity * prices[name];
-            total += itemTotal;
-            totalQuantity += quantity;
+        if (currentStep === 1) {
+          try {
+            const form = document.getElementById('orderFormStep1');
+            if (!form) {
+              console.error('orderFormStep1 not found');
+              return;
+            }
 
-            const label = document.querySelector(`select[name="${name}"]`).previousElementSibling.textContent;
-            const li = document.createElement('li');
-            li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
-            orderItemsList.appendChild(li);
+            const formData = new FormData(form);
+
+            // Clear previous order summary
+            if (orderItemsList) orderItemsList.innerHTML = '';
+
+            let total = 0;
+            let totalQuantity = 0;
+            let hasItems = false;
+
+            // Process each form field
+            for (const [name, qty] of formData.entries()) {
+              const quantity = parseInt(qty);
+              if (quantity > 0 && prices[name]) {
+                hasItems = true;
+                const itemTotal = quantity * prices[name];
+                total += itemTotal;
+                totalQuantity += quantity;
+
+                // Get the product name from the label
+                const selectEl = document.querySelector(`select[name="${name}"]`);
+                let label = name;
+                if (selectEl) {
+                  const labelEl = selectEl.closest('.product-item').querySelector('label');
+                  if (labelEl) label = labelEl.textContent;
+                }
+
+                // Add item to order summary
+                if (orderItemsList) {
+                  const li = document.createElement('li');
+                  li.textContent = `${label}: ${quantity} × $${prices[name].toFixed(2)} = $${itemTotal.toFixed(2)}`;
+                  orderItemsList.appendChild(li);
+                }
+              }
+            }
+
+            // Calculate delivery cost based on total
+            let deliveryCost = 0;
+            if (total > 0 && total <= 60) deliveryCost = 8.00;
+            else if (total > 60 && total <= 120) deliveryCost = 10.00;
+            else if (total > 120) deliveryCost = 12.00;
+
+            // Add delivery cost to order list
+            if (deliveryCost > 0 && orderItemsList) {
+              const deliveryLi = document.createElement('li');
+              deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
+              orderItemsList.appendChild(deliveryLi);
+            }
+
+            // Update total
+            total += deliveryCost;
+            if (orderTotalEl) orderTotalEl.textContent = total.toFixed(2);
+
+            console.log('Order processed, total:', total);
+
+            // Proceed to step 2
+            showStep(2);
+
+          } catch (err) {
+            console.error('Error processing order:', err);
+            alert("There was an error processing your order. Please try again.");
           }
         }
+      });
+    }
 
-        // Calculate delivery cost based on quantity
-        let deliveryCost = 0;
-        if (total > 0 && total <= 60) deliveryCost = 8.00;
-        else if (total <= 120) deliveryCost = 10.00;
-        else deliveryCost = 12.00;
+    // Submit button behavior
+    if (submitBtn) {
+      submitBtn.addEventListener('click', async (event) => {
+        event.preventDefault();
+        console.log('Submit button clicked');
 
-        // Show delivery cost
-        if (deliveryCost > 0) {
-          const deliveryLi = document.createElement('li');
-          deliveryLi.textContent = `Delivery Cost: $${deliveryCost.toFixed(2)}`;
-          orderItemsList.appendChild(deliveryLi);
+        try {
+          const form = document.getElementById('orderFormStep2');
+          if (!form) {
+            console.error('orderFormStep2 not found');
+            return;
+          }
+
+          // Build order summary text
+          let orderSummary = '';
+          if (orderItemsList) {
+            orderSummary = Array.from(orderItemsList.querySelectorAll('li'))
+              .map(li => li.textContent)
+              .join('\n');
+          }
+
+          // Set hidden fields
+          const orderField = document.getElementById('orderField');
+          const totalField = document.getElementById('totalField');
+          if (orderField) orderField.value = orderSummary;
+          if (totalField && orderTotalEl) totalField.value = orderTotalEl.textContent;
+
+          // Combine first and last name for full_name hidden field
+          const firstName = form.querySelector('[name="firstName"]')?.value.trim() || '';
+          const lastName = form.querySelector('[name="lastName"]')?.value.trim() || '';
+          const fullName = `${firstName} ${lastName}`.trim();
+
+          let fullNameField = form.querySelector('[name="full_name"]');
+          if (!fullNameField) {
+            fullNameField = document.createElement('input');
+            fullNameField.type = 'hidden';
+            fullNameField.name = 'full_name';
+            form.appendChild(fullNameField);
+          }
+          fullNameField.value = fullName;
+
+          // Send confirmation email to customer
+          await emailjs.sendForm(
+            "service_ysispk8",
+            "template_b8g295h",
+            form,
+            "6URWzvPDCKvplKWVm"
+          );
+
+          // Send order details to owner
+          await emailjs.sendForm(
+            "service_ysispk8",
+            "template_nzusrii",
+            form,
+            "6URWzvPDCKvplKWVm"
+          );
+
+          // Show thank you step and final amount
+          if (finalAmountEl && orderTotalEl) {
+            finalAmountEl.textContent = '$' + orderTotalEl.textContent;
+          }
+          showStep(3);
+
+        } catch (error) {
+          console.error('Error submitting form:', error);
+          alert("There was an error submitting your order. Please try again.");
         }
-
-        total += deliveryCost;
-        orderTotalEl.textContent = total.toFixed(2);
-
-        showStep(2);
-
-      } catch (err) {
-        alert("There was an error processing your order. Please try again.");
-        console.error(err);
-      }
-    });
-
-    document.getElementById('orderFormStep2').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      try {
-        const form = event.target;
-
-        // Create order summary text
-        const orderSummary = Array.from(orderItemsList.querySelectorAll('li'))
-          .map(li => li.textContent)
-          .join('\n');
-
-        document.getElementById('orderField').value = orderSummary;
-        document.getElementById('totalField').value = orderTotalEl.textContent;
-
-        // Combine first name and last name into full_name
-        const firstName = form.querySelector('[name="firstName"]').value;
-        const lastName = form.querySelector('[name="lastName"]').value;
-        const fullName = `${firstName} ${lastName}`;
-
-        // Set the full_name field value
-        let fullNameField = form.querySelector('[name="full_name"]');
-        if (!fullNameField) {
-          fullNameField = document.createElement('input');
-          fullNameField.type = 'hidden';
-          fullNameField.name = 'full_name';
-          form.appendChild(fullNameField);
-        }
-        fullNameField.value = fullName;
-
-        // Send confirmation to customer
-        await emailjs.sendForm(
-          "service_ysispk8", "template_b8g295h", form,
-          "6URWzvPDCKvplKWVm" // Public key
-        );
-
-        // Send order details to owner
-        await emailjs.sendForm(
-          "service_ysispk8", "template_nzusrii", form,
-          "6URWzvPDCKvplKWVm" // Public key
-        );
-
-        showStep(3);
-        finalAmountEl.textContent = orderTotalEl.textContent;
-
-      } catch (error) {
-        alert("There was an error submitting your order. Please try again.");
-        console.error(error);
-      }
-    });
+      });
+    }
   </script>
+
 </body>
 
 </html>
