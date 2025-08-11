@@ -103,6 +103,7 @@ button.primary-btn:hover {
 .nav-buttons button.primary-btn {
   background: #f1c40f;
   color: #1f1f1f;
+  font-weight: 600;
 }
 
 .nav-buttons button.primary-btn:hover {
