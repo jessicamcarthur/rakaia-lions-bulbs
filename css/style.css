@@ -24,6 +24,10 @@ h3 { font-size: 20px; font-weight: 500; color: #444; }
 p, ul, label { font-size: 18px; }
 li { font-weight: bold; }
 
+.subtitle {
+  margin-bottom: 4.2rem;
+}
+
 #form-step-1 > p {
   margin-bottom: 50px;
 }
